@@ -12,11 +12,11 @@ public class CreateRatFormBean {
     private Integer id;
 
     @NotEmpty(message = "Rat Name is required.")
-    @Length(max = 100, message = "Name must be less than 100 characters.")
+    @Length(max = 45, message = "Name must be less than 45 characters.")
     private String name;
 
     @NotEmpty(message = "Rat Genetics are required.")
-    @Length(max = 100, message = "Rat Genetics must be less than 100 characters.")
+    @Length(max = 150, message = "Rat Genetics must be less than 150 characters.")
     private String genes;
 
     private Integer adopterId;

@@ -53,4 +53,7 @@ public class User
     @Column(name = "sex_pref")
     private String sexPref;
 
+    @Column(name = "phone")
+    private String phone;
+
 }
