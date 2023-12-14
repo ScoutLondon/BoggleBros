@@ -9,8 +9,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_roles")
-public class UserRole
+@Table(name = "orders")
+public class Order
 {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class UserRole
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "user_role")
-    private String userRole;
+    @Column(name = "order_status")
+    private String orderStatus;
 
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -21,10 +23,28 @@ public class Rat
     @Column(name = "genes")
     private String genes;
 
-    @Column(name = "adopter_id")
-    private Integer adopterId;
+    @Column(name = "birthday")
+    private Date birthday;
 
-    @Column(name = "adoption_status")
-    private String adoptionStatus;
+    @Column(name = "price")
+    private Integer price;
+
+    @Column(name = "sex")
+    private String sex;
+
+    @Column(name = "size")
+    private String size;
+
+    @Column(name = "photo1")
+    private String photo1;
+
+    @Column(name = "photo2")
+    private String photo2;
+
+    @Column(name = "photo3")
+    private String photo3;
+
+    @Column(name = "rat_status")
+    private String ratStatus;
 
 }
