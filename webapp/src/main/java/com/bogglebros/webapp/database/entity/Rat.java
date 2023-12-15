@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,5 +48,9 @@ public class Rat
 
     @Column(name = "rat_status")
     private String ratStatus;
+
+    @OneToMany(mappedBy = "rat", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
 }

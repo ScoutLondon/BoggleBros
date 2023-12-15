@@ -17,11 +17,13 @@ public class Reservation
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "order_id")
-    private Integer orderId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
-    @Column(name = "rat_id")
-    private Integer ratId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "rat_id", nullable = false)
+    private Rat rat;
 
     @Column(name = "reservation_status")
     private String reservationStatus;
