@@ -20,7 +20,7 @@ public class UserRole
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "user_role")
-    private String userRole;
+    @Column(name = "role_name")
+    private String roleName;
 
 }
