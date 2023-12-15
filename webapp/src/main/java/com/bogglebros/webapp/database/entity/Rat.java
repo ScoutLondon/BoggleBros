@@ -23,6 +23,7 @@ public class Rat
     @Column(name = "genes")
     private String genes;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthday;
 

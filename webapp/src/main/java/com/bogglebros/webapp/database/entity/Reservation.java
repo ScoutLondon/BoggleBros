@@ -26,6 +26,7 @@ public class Reservation
     @Column(name = "reservation_status")
     private String reservationStatus;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "timestamp")
     private Date timestamp;
 
