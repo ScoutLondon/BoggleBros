@@ -42,7 +42,7 @@ public class RegisterUserFormBean {
 
     @NotEmpty(message = "Years of rat-keeping experience is required.")
     @Length(max = 45, message = "Years of rat-keeping must be less than 45 characters.")
-    private String years_experience;
+    private String yearsExperience;
 
     @NotEmpty(message = "Description of current rat ownership is required.")
     @Length(max = 1500, message = "Description of current rat ownership must be less than 1500 characters.")

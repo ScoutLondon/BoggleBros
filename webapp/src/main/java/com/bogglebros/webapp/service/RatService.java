@@ -18,9 +18,10 @@ public class RatService {
         log.debug("id: " + form.getId());
         log.debug("name: " + form.getName());
         log.info("genes: " + form.getGenes());
-        log.info("adopterId: " + form.getAdopterId());
-        log.info("adoptionStatus: " + form.getAdoptionStatus());
+        log.info("birthday: " + form.getBirthday());
+        log.info("price: " + form.getPrice());
         log.info("sex: " + form.getSex());
+        log.info("ratStatus: " + form.getRatStatus());
 
         Rat rat = ratDao.findById(form.getId());
 
@@ -30,9 +31,14 @@ public class RatService {
 
         rat.setName(form.getName());
         rat.setGenes(form.getGenes());
-        rat.setAdopterId(form.getAdopterId());
-        rat.setAdoptionStatus(form.getAdoptionStatus());
+        rat.setBirthday(form.getBirthday());
+        rat.setPrice(form.getPrice());
         rat.setSex(form.getSex());
+        rat.setSize(form.getSize());
+        rat.setPhoto1(form.getPhoto1());
+        rat.setPhoto2(form.getPhoto2());
+        rat.setPhoto3(form.getPhoto3());
+        rat.setRatStatus(form.getRatStatus());
 
         return ratDao.save(rat);
     }
