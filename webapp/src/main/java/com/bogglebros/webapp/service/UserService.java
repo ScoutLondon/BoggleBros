@@ -8,6 +8,8 @@ import com.bogglebros.webapp.formbean.CreateRatFormBean;
 import com.bogglebros.webapp.formbean.RegisterUserFormBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -16,6 +18,10 @@ public class UserService {
 
     @Autowired
     private UserDAO userDao;
+
+    @Lazy
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User registerUser(RegisterUserFormBean form){
         log.debug("id: " + form.getId());
@@ -41,7 +47,10 @@ public class UserService {
         }
 
         user.setEmail(form.getEmail());
-        user.setPassword(form.getPassword());
+
+        String encoded = passwordEncoder.encode(form.getPassword());
+        user.setPassword(encoded);
+
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         user.setCity(form.getCity());
