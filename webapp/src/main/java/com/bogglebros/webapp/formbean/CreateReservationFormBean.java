@@ -15,4 +15,8 @@ public class CreateReservationFormBean {
     @Length(max = 45, message = "Reservation Status must be less than 45 characters.")
     private String reservationStatus;
 
+    //adding these to access in ReservationService, will fill with requestparam in controller
+    private Integer orderId;
+    private Integer ratId;
+
 }
