@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Slf4j
 @Service
 public class UserService {
@@ -43,7 +45,7 @@ public class UserService {
 
         if ( user == null){
             user = new User();
-            user.setCreateDate(form.getCreateDate());
+            user.setCreateDate(new Date());
         }
 
         user.setEmail(form.getEmail());
