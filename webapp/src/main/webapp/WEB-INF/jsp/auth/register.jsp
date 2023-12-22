@@ -169,7 +169,7 @@
 
 
                     <div class="mt-3">
-                        <label for="breederStatus" class="form-label">Below, please tell us a little about your care. What Food, Bedding and Caging will you be using?</label>
+                        <label for="breederStatus" class="form-label">Please choose the answer that best describes you.</label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="breederStatus" id="nonBreeder" value="Non-Breeder" ${form.breederStatus == 'Non-Breeder' ? 'checked' : ''}>
                             <label class="form-check-label" for="nonBreeder">
