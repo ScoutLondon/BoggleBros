@@ -52,7 +52,7 @@
 
                     <sec:authorize access="!isAuthenticated()">
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/register">Adoption Application</a>
+                        <a class="nav-link" href="/auth/register">Adopter Application</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/auth/login">Login</a>
