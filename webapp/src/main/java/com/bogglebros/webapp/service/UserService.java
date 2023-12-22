@@ -2,8 +2,10 @@ package com.bogglebros.webapp.service;
 
 import com.bogglebros.webapp.database.dao.RatDAO;
 import com.bogglebros.webapp.database.dao.UserDAO;
+import com.bogglebros.webapp.database.dao.UserRoleDAO;
 import com.bogglebros.webapp.database.entity.Rat;
 import com.bogglebros.webapp.database.entity.User;
+import com.bogglebros.webapp.database.entity.UserRole;
 import com.bogglebros.webapp.formbean.CreateRatFormBean;
 import com.bogglebros.webapp.formbean.RegisterUserFormBean;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserDAO userDao;
+
+    @Autowired
+    private UserRoleDAO userRoleDao;
 
     @Lazy
     @Autowired
@@ -64,6 +69,15 @@ public class UserService {
         user.setSexPref(form.getSexPref());
         user.setPhone(form.getPhone());
 
-        return userDao.save(user);
+        User newUser = userDao.save(user);
+
+        if (userRoleDao.findByUserId(newUser.getId()).isEmpty()){
+            UserRole userRole = new UserRole();
+            userRole.setUser(newUser);
+            userRole.setRoleName("USER");
+            userRoleDao.save(userRole);
+        }
+
+        return newUser;
     }
 }
