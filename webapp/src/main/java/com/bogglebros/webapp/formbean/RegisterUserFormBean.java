@@ -60,6 +60,7 @@ public class RegisterUserFormBean {
     @Length(max = 45, message = "Sex preference must be less than 45 characters.")
     private String sexPref;
 
+    @NotEmpty(message = "Phone number is required.")
     @Length(max = 45, message = "Phone must be less than 45 characters.")
     private String phone;
 }
