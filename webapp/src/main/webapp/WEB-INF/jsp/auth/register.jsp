@@ -240,7 +240,30 @@
                     </c:if>
 
 
-                    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                    <div class="mt-3">
+                        <textarea rows="10" class="form-control" readonly>
+                        - Rats are living animals. While we do our best to assure a rat arrives to you in good health, temperament and properly socialized, we cannot guarantee how a living animal will adjust to their new home once released from our care. We offer support to all of our adopters leading up to, and after adoption. If you notice something off about your rat's adjustment period, we encourage you to reach out and explain the situation to us.
+
+                        - We highly encourage our adopters to quarantine their new babies in a separate enclosure and air space from their resident mischief for at least 2 weeks to monitor for health or temperament issues.
+
+                        - You have 48 hours post adoption to report health or temperament issues for a refund. After this period, you will only be offered an exchange for rats you have purchased from BBR.
+
+                        - If you are ever unable to care for your rats, BBR would like right of first refusal.
+                        </textarea>
+                    </div>
+
+                    <div class="mt-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms">
+                        <label class="form-check-label" for="terms">I understand and agree to these policies.</label>
+                    </div>
+
+                    <button type="submit" id="submitButton" class="btn btn-primary mt-4" disabled>Submit</button>
+
+                    <script>
+                        document.getElementById('terms').addEventListener('change', function() {
+                            document.getElementById('submitButton').disabled = !this.checked;
+                        });
+                    </script>
                 </form>
             </div>
         </div>
