@@ -41,7 +41,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rats/available">Available Rats</a>
+                        <a class="nav-link" href="/rat/available">Available Rats</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About Us</a>
@@ -59,7 +59,8 @@
                     </li>
                     </sec:authorize>
 
-                    <sec:authorize access="hasAnyAuthority('USER')">
+                    <sec:authorize access="isAuthenticated()">
+                    <sec:authorize access="!hasAnyAuthority('ADMIN')">
                         <li class="nav-item">
                             <a class="nav-link" href="/order/tracker">My Adoption</a>
                         </li>
@@ -67,13 +68,14 @@
                             <a class="nav-link" href="/reservation/tracker">My Reservations</a>
                         </li>
                     </sec:authorize>
+                    </sec:authorize>
 
                     <sec:authorize access="hasAnyAuthority('ADMIN')">
                         <li class="nav-item">
-                            <a class="nav-link" href="/rats/add">Add Rat</a>
+                            <a class="nav-link" href="/rat/create">Add Rat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/rats/edit">Edit Ratabase</a>
+                            <a class="nav-link" href="/rat/edit">Edit Ratabase</a>
                         </li>
                     </sec:authorize>
 
