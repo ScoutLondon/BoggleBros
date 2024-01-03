@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -22,10 +23,9 @@ public class CreateRatFormBean {
     private String genes;
 
     @NotEmpty(message = "Birthday is required")
-    private Date birthday;
+    private String birthday;
 
-    @NotEmpty(message = "Price is required.")
-    @Length(max = 45, message = "Price must be less than 45 characters.")
+
     private Integer price;
 
     @NotEmpty(message = "Rat Sex is required.")
@@ -36,11 +36,11 @@ public class CreateRatFormBean {
     @Length(max = 45, message = "Rat size must be less than 45 characters.")
     private String size;
 
-    private String photo1;
+    private MultipartFile photo1;
 
-    private String photo2;
+    private MultipartFile photo2;
 
-    private String photo3;
+    private MultipartFile photo3;
 
     @NotEmpty(message = "Rat Status is required.")
     @Length(max = 45, message = "Rat status must be less than 45 characters.")
