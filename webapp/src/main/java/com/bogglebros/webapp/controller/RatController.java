@@ -1,5 +1,6 @@
 package com.bogglebros.webapp.controller;
 
+import com.bogglebros.webapp.database.dao.RatDAO;
 import com.bogglebros.webapp.database.entity.Rat;
 import com.bogglebros.webapp.database.entity.User;
 import com.bogglebros.webapp.formbean.CreateRatFormBean;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -29,6 +31,9 @@ public class RatController {
 
     @Autowired
     private RatService ratService;
+
+    @Autowired
+    private RatDAO ratDao;
 
     @GetMapping("/rat/create")
     public ModelAndView create(){
@@ -61,6 +66,18 @@ public class RatController {
         ModelAndView response = new ModelAndView();
         response.setViewName("redirect:/");
 
+        return response;
+    }
+
+    @GetMapping("/rat/available")
+    public ModelAndView availableRats() {
+        ModelAndView response = new ModelAndView("rat/available");
+        log.info("In available rats with no args");
+        List<Rat> rats = ratDao.findByRatStatus("Available");
+        response.addObject("ratList", rats);
+        for (Rat rat : rats){
+            log.debug("Rat: id = " + rat.getId() + " Name = " + rat.getName());
+        }
         return response;
     }
 
