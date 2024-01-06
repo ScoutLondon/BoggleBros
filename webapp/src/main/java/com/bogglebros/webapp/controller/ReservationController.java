@@ -31,27 +31,38 @@ public class ReservationController {
     private OrderDAO orderDao;
 
     @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private ReservationService reservationService;
+
+    @Autowired
     private ReservationDAO reservationDao;
 
     @GetMapping("/reservation/create")
     public ModelAndView reservationCreate(@RequestParam Integer id) {
-        ModelAndView response = new ModelAndView("redirect:/rats/available");
+        ModelAndView response = new ModelAndView("redirect:/rat/available");
         log.info("################# In create reservation #############");
 
         User user = authenticatedUserService.loadCurrentUser();
+        log.debug("######## Current user " + user.getEmail() + " authenticated #########");
 
         Order openOrder = orderDao.findByUserIdAndOrderStatus(user.getId(), "Open");
 
         if (openOrder == null){
+            log.debug("######## No open order found #######");
 
             CreateOrderFormBean newOrderForm = new CreateOrderFormBean();
             newOrderForm.setOrderStatus("Open");
-            openOrder = new OrderService().createOrder(newOrderForm);
+            openOrder = orderService.createOrder(newOrderForm);
             openOrder.setUser(user);
 
             orderDao.save(openOrder);
+            log.debug("####### New order " + openOrder.getId() + " created ########");
 
         }
+
+        log.debug("####### In order id: " + openOrder.getId());
 
 
         CreateReservationFormBean newReservationForm = new CreateReservationFormBean();
@@ -59,12 +70,19 @@ public class ReservationController {
         newReservationForm.setOrderId(openOrder.getId());
         newReservationForm.setRatId(id);
 
-        Reservation newReservation = new ReservationService().createReservation(newReservationForm);
+        Reservation newReservation = reservationService.createReservation(newReservationForm);
         reservationDao.save(newReservation);
+
+        log.debug("##### New reservation id: " + newReservation.getId() + " created #####");
 
         List<Reservation> reservations = reservationDao.findByOrderId(openOrder.getId());
         openOrder.setReservations(reservations);
         orderDao.save(openOrder);
+
+        log.debug("##### Reservation list updated for order " + openOrder.getId());
+        for (Reservation r: reservations){
+            log.debug("##### Reservation id: " + r.getId() + "rat: " + r.getRat().getName() + " status: " + r.getReservationStatus());
+        }
 
         return  response;
     }
