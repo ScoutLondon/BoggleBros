@@ -12,6 +12,7 @@ import com.bogglebros.webapp.formbean.CreateReservationFormBean;
 import com.bogglebros.webapp.security.AuthenticatedUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,6 +33,7 @@ public class ReservationService {
     @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
+    @PreAuthorize("hasAuthority('USER')")
     public Reservation createReservation(CreateReservationFormBean form){
 
         Reservation reservation = reservationDao.findById(form.getId());
