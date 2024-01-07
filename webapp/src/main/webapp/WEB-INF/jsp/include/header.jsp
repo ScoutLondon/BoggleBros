@@ -62,10 +62,10 @@
                     <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="!hasAnyAuthority('ADMIN')">
                         <li class="nav-item">
-                            <a class="nav-link" href="/order/tracker">My Adoption</a>
+                            <a class="nav-link" href="/order/view">My Adoption</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/reservation/tracker">My Reservations</a>
+                            <a class="nav-link" href="/reservation/view">My Reservations</a>
                         </li>
                     </sec:authorize>
                     </sec:authorize>

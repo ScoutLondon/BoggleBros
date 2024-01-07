@@ -15,6 +15,10 @@ public interface ReservationDAO extends JpaRepository<Reservation, Long> {
     @Query("SELECT c from Reservation c WHERE c.order.id = :orderId")
     List<Reservation> findByOrderId(Integer orderId);
 
+    List<Reservation> findByOrderIdAndReservationStatus(Integer orderId, String reservationStatus);
+
+    public Reservation findByOrderIdAndRatId(Integer orderId, Integer ratId);
+
     @Query("SELECT c from Reservation c WHERE c.rat.id = :ratId")
     List<Reservation> findByRatId(Integer ratId);
 

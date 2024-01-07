@@ -3,6 +3,7 @@ package com.bogglebros.webapp.controller;
 import com.bogglebros.webapp.database.dao.OrderDAO;
 import com.bogglebros.webapp.database.dao.ReservationDAO;
 import com.bogglebros.webapp.database.entity.Order;
+import com.bogglebros.webapp.database.entity.Rat;
 import com.bogglebros.webapp.database.entity.Reservation;
 import com.bogglebros.webapp.database.entity.User;
 import com.bogglebros.webapp.formbean.CreateOrderFormBean;
@@ -64,16 +65,20 @@ public class ReservationController {
 
         log.debug("####### In order id: " + openOrder.getId());
 
+        Reservation reservationCheck = reservationDao.findByOrderIdAndRatId(openOrder.getId(), id);
+        if(reservationCheck == null) {
 
-        CreateReservationFormBean newReservationForm = new CreateReservationFormBean();
-        newReservationForm.setReservationStatus("Pending");
-        newReservationForm.setOrderId(openOrder.getId());
-        newReservationForm.setRatId(id);
+            CreateReservationFormBean newReservationForm = new CreateReservationFormBean();
+            newReservationForm.setReservationStatus("Pending");
+            newReservationForm.setOrderId(openOrder.getId());
+            newReservationForm.setRatId(id);
 
-        Reservation newReservation = reservationService.createReservation(newReservationForm);
-        reservationDao.save(newReservation);
+            Reservation newReservation = reservationService.createReservation(newReservationForm);
+            reservationDao.save(newReservation);
 
-        log.debug("##### New reservation id: " + newReservation.getId() + " created #####");
+            log.debug("##### New reservation id: " + newReservation.getId() + " created #####");
+
+        }
 
         List<Reservation> reservations = reservationDao.findByOrderId(openOrder.getId());
         openOrder.setReservations(reservations);
@@ -85,6 +90,20 @@ public class ReservationController {
         }
 
         return  response;
+    }
+
+    @GetMapping("/reservation/view")
+    public ModelAndView reservationView() {
+        ModelAndView response = new ModelAndView("reservation/view");
+        log.info("In reservation view with no args");
+        User user = authenticatedUserService.loadCurrentUser();
+        Order order = orderDao.findByUserIdAndOrderStatus(user.getId(), "Open");
+        List<Reservation> reservations = reservationDao.findByOrderIdAndReservationStatus(order.getId(), "Pending");
+        response.addObject("reservationList", reservations);
+        for (Reservation reservation : reservations){
+            log.debug("Reservation: id = " + reservation.getId() + " Rat = " + reservation.getRat());
+        }
+        return response;
     }
 
 }
