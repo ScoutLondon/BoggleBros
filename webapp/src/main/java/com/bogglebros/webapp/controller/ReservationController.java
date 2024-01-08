@@ -7,18 +7,26 @@ import com.bogglebros.webapp.database.entity.Rat;
 import com.bogglebros.webapp.database.entity.Reservation;
 import com.bogglebros.webapp.database.entity.User;
 import com.bogglebros.webapp.formbean.CreateOrderFormBean;
+import com.bogglebros.webapp.formbean.CreateRatFormBean;
 import com.bogglebros.webapp.formbean.CreateReservationFormBean;
 import com.bogglebros.webapp.security.AuthenticatedUserService;
 import com.bogglebros.webapp.service.OrderService;
 import com.bogglebros.webapp.service.ReservationService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Slf4j
@@ -103,6 +111,69 @@ public class ReservationController {
         for (Reservation reservation : reservations){
             log.debug("Reservation: id = " + reservation.getId() + " Rat = " + reservation.getRat());
         }
+        return response;
+    }
+
+    @GetMapping("/reservation/manage")
+    public ModelAndView manageReservations() {
+        ModelAndView response = new ModelAndView("reservation/manage");
+        log.info("In edit reservations view with no args");
+        List<Reservation> reservations = reservationDao.findAllReservations();
+        response.addObject("reservationList", reservations);
+        for (Reservation reservation : reservations){
+            log.debug("Reservation: id = " + reservation.getId() + " Rat = " + reservation.getRat());
+        }
+        return response;
+    }
+
+    @GetMapping("/reservation/edit/{id}")
+    //use this for edit/id/x vs edit?id=x
+    public ModelAndView editReservation(@PathVariable int id){
+        ModelAndView response = new ModelAndView("reservation/edit");
+        log.info("In edit reservation with id: " + id);
+
+        Reservation reservation = reservationDao.findById(id);
+
+        CreateReservationFormBean form = new CreateReservationFormBean();
+
+        if ( reservation != null) {
+            form.setId(reservation.getId());
+            form.setReservationStatus(form.getReservationStatus());
+            form.setRatId(reservation.getRat().getId());
+            form.setOrderId(reservation.getOrder().getId());
+        } else {
+            log.warn("Reservation with id " + id + " was not found");
+        }
+
+        response.addObject("form", form);
+
+        return response;
+    }
+
+    @GetMapping("/reservation/editSubmit")
+    public ModelAndView editSubmit(@Valid CreateReservationFormBean form, BindingResult bindingResult, HttpSession session) throws ParseException {
+
+        if (bindingResult.hasErrors()) {
+            log.info("######################### In edit reservation - has errors #########################");
+            ModelAndView response = new ModelAndView("reservation/edit");
+
+            for ( ObjectError error : bindingResult.getAllErrors() ) {
+                log.info("error: " + error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+            response.addObject("errors", bindingResult);
+            return response;
+        }
+
+        log.info("############ In edit reservation - no error found #############");
+
+
+        Reservation r = reservationService.createReservation(form);
+
+        ModelAndView response = new ModelAndView();
+        response.setViewName("redirect:/");
+
         return response;
     }
 

@@ -33,7 +33,7 @@ public class ReservationService {
     @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
-    @PreAuthorize("hasAuthority('USER')")
+
     public Reservation createReservation(CreateReservationFormBean form){
 
         Reservation reservation = reservationDao.findById(form.getId());
