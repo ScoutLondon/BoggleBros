@@ -16,11 +16,13 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -114,6 +116,7 @@ public class ReservationController {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/reservation/manage")
     public ModelAndView manageReservations() {
         ModelAndView response = new ModelAndView("reservation/manage");
@@ -138,6 +141,7 @@ public class ReservationController {
 
         if ( reservation != null) {
             form.setId(reservation.getId());
+            log.debug("form ID set to: " + form.getId());
             form.setReservationStatus(form.getReservationStatus());
             form.setRatId(reservation.getRat().getId());
             form.setOrderId(reservation.getOrder().getId());
@@ -145,12 +149,15 @@ public class ReservationController {
             log.warn("Reservation with id " + id + " was not found");
         }
 
+        log.debug("form reservationStatus set to: " + form.getReservationStatus());
+        log.debug("form ratId set to: " + form.getRatId());
+        log.debug("form orderId set to: " + form.getOrderId());
         response.addObject("form", form);
 
         return response;
     }
 
-    @GetMapping("/reservation/editSubmit")
+    @PostMapping("/reservation/editSubmit")
     public ModelAndView editSubmit(@Valid CreateReservationFormBean form, BindingResult bindingResult, HttpSession session) throws ParseException {
 
         if (bindingResult.hasErrors()) {

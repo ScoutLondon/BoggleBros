@@ -26,6 +26,9 @@
                     <li class="list-group-item">Timestamp: ${reservation.timestamp}</li>
                     <li class="list-group-item">Adopter: ${reservation.order.user.firstName} ${reservation.order.user.lastName}</li>
                   </ul>
+                  <div class="card-body">
+                    <a href="/reservation/edit/${reservation.id}" class="card-link">Edit Reservation!</a>
+                  </div>
                 </div>
             </c:forEach>
 </c:if>

@@ -106,7 +106,6 @@ public class RatController {
         if ( rat != null) {
             form.setId(rat.getId());
             log.debug("form ID set to: " + form.getId());
-            //TODO: WHEN FORM IS PASSED TO SERVICE, FORM.ID IS NULL
             form.setName(rat.getName());
             form.setGenes(rat.getGenes());
 
