@@ -12,22 +12,25 @@
 </section>
 
 <c:if test="${not empty reservationList}">
-
-
-
+    <div class="container">
+        <div class="row">
             <c:forEach items="${reservationList}" var="reservation">
-                <div class="card" style="width: 18rem;">
-                  <img src="${reservation.rat.photo1}" class="card-img-top" alt="${reservation.rat.name}">
-                  <div class="card-body">
-                    <h5 class="card-title">${reservation.rat.name}</h5>
-                  </div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Size: ${reservation.rat.size}</li>
-                    <li class="list-group-item">Genes: ${reservation.rat.genes}</li>
-                    <li class="list-group-item">Adoption Fee: $ ${reservation.rat.price}</li>
-                  </ul>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card">
+                        <img src="${reservation.rat.photo1}" class="card-img-top" alt="${reservation.rat.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${reservation.rat.name}</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Size: ${reservation.rat.size}</li>
+                            <li class="list-group-item">Genes: ${reservation.rat.genes}</li>
+                            <li class="list-group-item">Adoption Fee: $ ${reservation.rat.price}</li>
+                        </ul>
+                    </div>
                 </div>
             </c:forEach>
+        </div>
+    </div>
 </c:if>
 
 
