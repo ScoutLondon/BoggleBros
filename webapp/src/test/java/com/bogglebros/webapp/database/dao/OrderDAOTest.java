@@ -27,6 +27,7 @@ public class OrderDAOTest {
         //given
         Date date = new Date();
         User user = new User();
+        //TODO: can query existing user instead of create
         user.setEmail("qwertyqwerty");
         user.setPassword("qwertyqwerty");
         user.setCreateDate(date);
