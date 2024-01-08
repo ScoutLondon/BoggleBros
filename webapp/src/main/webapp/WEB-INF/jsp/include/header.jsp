@@ -75,7 +75,10 @@
                             <a class="nav-link" href="/rat/create">Add Rat</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/rat/edit">Edit Ratabase</a>
+                            <a class="nav-link" href="/rat/ratabase">Edit Ratabase</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/reservation/manage">Reservation Manager</a>
                         </li>
                     </sec:authorize>
 
