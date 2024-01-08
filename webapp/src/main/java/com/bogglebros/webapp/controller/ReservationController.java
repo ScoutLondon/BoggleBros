@@ -108,15 +108,21 @@ public class ReservationController {
         log.info("In reservation view with no args");
         User user = authenticatedUserService.loadCurrentUser();
         Order order = orderDao.findByUserIdAndOrderStatus(user.getId(), "Open");
-        List<Reservation> reservations = reservationDao.findByOrderIdAndReservationStatus(order.getId(), "Pending");
-        response.addObject("reservationList", reservations);
-        for (Reservation reservation : reservations){
-            log.debug("Reservation: id = " + reservation.getId() + " Rat = " + reservation.getRat());
+        if (order == null) {
+            log.debug("No order found");
+            response.setViewName("redirect:/rat/available");
+        } else {
+            List<Reservation> reservations = reservationDao.findByOrderIdAndReservationStatus(order.getId(), "Pending");
+            response.addObject("reservationList", reservations);
+            for (Reservation reservation : reservations) {
+                log.debug("Reservation: id = " + reservation.getId() + " Rat = " + reservation.getRat());
+            }
         }
         return response;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
+    //TODO: add more preauthorize before hosting
     @GetMapping("/reservation/manage")
     public ModelAndView manageReservations() {
         ModelAndView response = new ModelAndView("reservation/manage");
